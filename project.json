@@ -1,0 +1,29 @@
+{
+  "overview": "Hazine est une solution SaaS de comptabilité complète pour les entreprises algériennes, conforme au Système Comptable Financier (SCF) et à la Loi 07-11. Elle couvre la comptabilité en partie double, la facturation TVA, la gestion des stocks, la trésorerie et les états financiers obligatoires — le tout en français et en DZD.",
+  "features": [
+    "Plan comptable SCF complet (7 classes)",
+    "Journal comptable avec numérotation automatique",
+    "Grand Livre et Balance générale",
+    "Bilan et Compte de résultats conformes SCF",
+    "Facturation clients/fournisseurs avec TVA (9%/19%)",
+    "Gestion des stocks avec valorisation CMUP et alertes minimum",
+    "Trésorerie caisse + banque",
+    "Multi-utilisateurs avec rôles (Admin, Comptable, Gestionnaire, Lecteur)",
+    "Tableau de bord avec KPIs (CA, résultat, trésorerie)",
+    "Interface entièrement en français, devise DZD"
+  ],
+  "category": "finance-accounting",
+  "tags": [
+    "comptabilit",
+    "alg-rie",
+    "scf",
+    "tva",
+    "facturation",
+    "stocks",
+    "saas",
+    "gestion",
+    "dzd",
+    "loi-07-11"
+  ],
+  "last_updated": "2026-04-13T15:22:57.171Z"
+}

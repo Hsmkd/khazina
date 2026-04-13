@@ -1,0 +1,417 @@
+type _ImmutableObjectStorageRefillResult = 
+ record {
+   success: opt bool;
+   topped_up_amount: opt nat;
+ };
+type _ImmutableObjectStorageRefillInformation = record {
+                                                  proposed_top_up_amount:
+                                                   opt nat;};
+type _ImmutableObjectStorageCreateCertificateResult = 
+ record {
+   blob_hash: text;
+   method: text;
+ };
+type ValeurStock = 
+ record {
+   designation: text;
+   prixMoyenPondere: Amount;
+   produitId: text;
+   quantite: float64;
+   valeurTotale: Amount;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserProfile = 
+ record {
+   actif: bool;
+   email: text;
+   nom: text;
+   role: Role;
+   userId: UserId;
+ };
+type UserId = principal;
+type TresoType = 
+ variant {
+   Banque;
+   Caisse;
+ };
+type Timestamp = int;
+type TiersInput = 
+ record {
+   adresse: text;
+   compteComptable: text;
+   email: text;
+   estClient: bool;
+   estFournisseur: bool;
+   nif: text;
+   nis: text;
+   nom: text;
+   rc: text;
+   telephone: text;
+ };
+type Tiers = 
+ record {
+   adresse: text;
+   compteComptable: text;
+   email: text;
+   estClient: bool;
+   estFournisseur: bool;
+   id: text;
+   nif: text;
+   nis: text;
+   nom: text;
+   rc: text;
+   telephone: text;
+ };
+type Role = 
+ variant {
+   Admin;
+   Comptable;
+   Gestionnaire;
+   Lecteur;
+ };
+type ResultValue = 
+ variant {
+   err: text;
+   ok: text;
+ };
+type Result = 
+ variant {
+   err: text;
+   ok;
+ };
+type ProduitInput = 
+ record {
+   code: text;
+   compteStock: text;
+   designation: text;
+   prixAchat: Amount;
+   prixVente: Amount;
+   stockMinimum: float64;
+   unite: text;
+ };
+type Produit = 
+ record {
+   actif: bool;
+   code: text;
+   compteStock: text;
+   designation: text;
+   id: text;
+   prixAchat: Amount;
+   prixVente: Amount;
+   stockActuel: float64;
+   stockMinimum: float64;
+   unite: text;
+ };
+type MvtType = 
+ variant {
+   Decaissement;
+   Encaissement;
+ };
+type MouvementType = 
+ variant {
+   Ajustement;
+   Entree;
+   Sortie;
+ };
+type MouvementTresorerieInput = 
+ record {
+   compteId: text;
+   date: Timestamp;
+   exercice: nat;
+   libelle: text;
+   montant: Amount;
+   reference: text;
+   "type": MvtType;
+ };
+type MouvementTresorerie = 
+ record {
+   compteId: text;
+   date: Timestamp;
+   exercice: nat;
+   id: text;
+   libelle: text;
+   montant: Amount;
+   reference: text;
+   "type": MvtType;
+ };
+type MouvementStockInput = 
+ record {
+   date: Timestamp;
+   exercice: nat;
+   notes: text;
+   prixUnitaire: Amount;
+   produitId: text;
+   quantite: float64;
+   reference: text;
+   "type": MouvementType;
+ };
+type MouvementStock = 
+ record {
+   date: Timestamp;
+   exercice: nat;
+   id: text;
+   notes: text;
+   prixUnitaire: Amount;
+   produitId: text;
+   quantite: float64;
+   reference: text;
+   "type": MouvementType;
+ };
+type LigneFacture = 
+ record {
+   designation: text;
+   montantHT: Amount;
+   montantTTC: Amount;
+   montantTVA: Amount;
+   prixUnitaire: Amount;
+   produitId: opt text;
+   quantite: float64;
+   tauxTVA: float64;
+ };
+type JournalEntryInput = 
+ record {
+   date: Timestamp;
+   ecritures: vec EcritureComptable;
+   exercice: nat;
+   journalCode: text;
+   libelle: text;
+ };
+type JournalEntry = 
+ record {
+   date: Timestamp;
+   ecritures: vec EcritureComptable;
+   exercice: nat;
+   id: text;
+   journalCode: text;
+   libelle: text;
+   numero: nat;
+   valide: bool;
+ };
+type FiscalYear = 
+ record {
+   annee: nat;
+   cloture: bool;
+   debut: Timestamp;
+   fin: Timestamp;
+ };
+type FactureType = 
+ variant {
+   Achat;
+   Vente;
+ };
+type FactureStatut = 
+ variant {
+   Annulee;
+   Brouillon;
+   Payee;
+   Validee;
+ };
+type FactureInput = 
+ record {
+   dateEcheance: opt Timestamp;
+   date: Timestamp;
+   exercice: nat;
+   lignes: vec LigneFacture;
+   notes: text;
+   tiersId: text;
+   "type": FactureType;
+ };
+type Facture = 
+ record {
+   dateEcheance: opt Timestamp;
+   date: Timestamp;
+   exercice: nat;
+   id: text;
+   lignes: vec LigneFacture;
+   notes: text;
+   numero: text;
+   statut: FactureStatut;
+   tiersId: text;
+   totalHT: Amount;
+   totalTTC: Amount;
+   totalTVA: Amount;
+   "type": FactureType;
+ };
+type EcritureComptable = 
+ record {
+   compte: text;
+   credit: Amount;
+   debit: Amount;
+   libelle: text;
+ };
+type CompteTresorerieInput = 
+ record {
+   banque: opt text;
+   compteComptable: text;
+   libelle: text;
+   numeroCompte: opt text;
+   soldeinitial: Amount;
+   "type": TresoType;
+ };
+type CompteTresorerie = 
+ record {
+   actif: bool;
+   banque: opt text;
+   compteComptable: text;
+   id: text;
+   libelle: text;
+   numeroCompte: opt text;
+   solde: Amount;
+   "type": TresoType;
+ };
+type CompteResultatsData = 
+ record {
+   chargesDetails: vec AccountBalance;
+   estBenefice: bool;
+   exercice: nat;
+   produitsDetails: vec AccountBalance;
+   resultatNet: Amount;
+   totalCharges: Amount;
+   totalProduits: Amount;
+ };
+type CompanyInfo = 
+ record {
+   activite: text;
+   adresse: text;
+   email: text;
+   exerciceActuel: nat;
+   nif: text;
+   nis: text;
+   nom: text;
+   rc: text;
+   telephone: text;
+ };
+type BilanData = 
+ record {
+   actifDetails: vec AccountBalance;
+   estEquilibre: bool;
+   exercice: nat;
+   passifDetails: vec AccountBalance;
+   totalActif: Amount;
+   totalPassif: Amount;
+ };
+type Amount = nat;
+type AccountType = 
+ variant {
+   Actif;
+   Bilan;
+   Charges;
+   Passif;
+   Produits;
+ };
+type AccountBalance = 
+ record {
+   compte: Account;
+   estDebiteur: bool;
+   solde: Amount;
+   totalCredit: Amount;
+   totalDebit: Amount;
+ };
+type Account = 
+ record {
+   classe: nat;
+   compteParent: opt text;
+   id: text;
+   libelle: text;
+   numero: text;
+   soldeCredit: Amount;
+   soldeDebit: Amount;
+   "type": AccountType;
+ };
+/// Hazine — SaaS Comptabilité Algérienne (Conforme SCF - Loi 07-11)
+/// Racine de composition : déclare l'état, importe et inclut les mixins.
+/// Aucune logique métier ici — tout est délégué aux mixins.
+service : {
+  _immutableObjectStorageBlobsAreLive: (hashes: vec blob) -> (vec bool) query;
+  _immutableObjectStorageBlobsToDelete: () -> (vec blob) query;
+  _immutableObjectStorageConfirmBlobDeletion: (blobs: vec blob) -> ();
+  _immutableObjectStorageCreateCertificate: (blobHash: text) ->
+   (_ImmutableObjectStorageCreateCertificateResult);
+  _immutableObjectStorageRefillCashier: (refillInformation:
+   opt _ImmutableObjectStorageRefillInformation) ->
+   (_ImmutableObjectStorageRefillResult);
+  _immutableObjectStorageUpdateGatewayPrincipals: () -> ();
+  _initializeAccessControl: () -> ();
+  addCompte: (compte: Account) -> (Result);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  cloturerExercice: (annee: nat) -> (Result);
+  createCompteTresorerie: (compte: CompteTresorerieInput) -> (ResultValue);
+  createExercice: (annee: nat) -> (Result);
+  createFacture: (facture: FactureInput) -> (ResultValue);
+  createJournalEntry: (entry: JournalEntryInput) -> (ResultValue);
+  createMouvementStock: (mvt: MouvementStockInput) -> (ResultValue);
+  createMouvementTresorerie: (mvt: MouvementTresorerieInput) -> (ResultValue);
+  createProduit: (produit: ProduitInput) -> (ResultValue);
+  createTiers: (input: TiersInput) -> (ResultValue);
+  deleteFacture: (id: text) -> (Result);
+  deleteJournalEntry: (id: text) -> (Result);
+  getBalance: (exercice: nat) -> (vec AccountBalance) query;
+  getBilan: (exercice: nat) -> (BilanData) query;
+  getCallerUserProfile: () -> (opt UserProfile) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getCompanyInfo: () -> (opt CompanyInfo) query;
+  getCompteResultats: (exercice: nat) -> (CompteResultatsData) query;
+  getComptes: () -> (vec Account) query;
+  getComptesParClasse: (classe: nat) -> (vec Account) query;
+  getComptesTresorerie: () -> (vec CompteTresorerie) query;
+  getDashboardStats: (exercice: nat) ->
+   (record {
+      alertesStock: nat;
+      chiffreAffaires: Amount;
+      nombreFacturesEnAttente: nat;
+      resultatNet: Amount;
+      soldeTresorerie: Amount;
+      totalCreances: Amount;
+      totalDettes: Amount;
+    }) query;
+  getExercices: () -> (vec FiscalYear) query;
+  getFacture: (id: text) -> (opt Facture) query;
+  getFactures: ("type": FactureType, exercice: nat, page: nat) ->
+   (record {
+      factures: vec Facture;
+      total: nat;
+    }) query;
+  getGrandLivre: (compteNumero: text, exercice: nat) ->
+   (vec JournalEntry) query;
+  getJournalEntries: (exercice: nat, page: nat) ->
+   (record {
+      entries: vec JournalEntry;
+      total: nat;
+    }) query;
+  getJournalEntry: (id: text) -> (opt JournalEntry) query;
+  getMouvementsStock: (produitId: opt text, exercice: nat, page: nat) ->
+   (record {
+      mouvements: vec MouvementStock;
+      total: nat;
+    }) query;
+  getMouvementsTresorerie: (compteId: opt text, exercice: nat, page: 
+   nat) -> (record {
+              mouvements: vec MouvementTresorerie;
+              total: nat;
+            }) query;
+  getProduit: (id: text) -> (opt Produit) query;
+  getProduits: () -> (vec Produit) query;
+  getProduitsEnRuptureOuAlerte: () -> (vec Produit) query;
+  getSoldeTresorerie: () -> (Amount) query;
+  getTiers: () -> (vec Tiers) query;
+  getTiersById: (id: text) -> (opt Tiers) query;
+  getUserProfile: (user: principal) -> (opt UserProfile) query;
+  getUsers: () -> (vec UserProfile) query;
+  getValeurStock: () -> (vec ValeurStock) query;
+  initData: () -> ();
+  initTresorerie: () -> ();
+  isCallerAdmin: () -> (bool) query;
+  saveCallerUserProfile: (profile: UserProfile) -> ();
+  updateCompanyInfo: (info: CompanyInfo) -> (Result);
+  updateCompte: (id: text, compte: Account) -> (Result);
+  updateProduit: (id: text, produit: ProduitInput) -> (Result);
+  updateTiers: (id: text, input: TiersInput) -> (Result);
+  updateUserRole: (userId: UserId, role: Role) -> (Result);
+  validateFacture: (id: text) -> (Result);
+  validateJournalEntry: (id: text) -> (Result);
+}

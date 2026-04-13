@@ -1,0 +1,245 @@
+// Version: 1.0.0
+type AccountType__126630098 = {#Actif; #Bilan; #Charges; #Passif; #Produits};
+type Account__252117990 =
+  {
+    classe : Nat;
+    compteParent : ?Text;
+    id : Text;
+    libelle : Text;
+    numero : Text;
+    soldeCredit : Amount__331108724;
+    soldeDebit : Amount__331108724;
+    type_ : AccountType__126630098
+  };
+type Amount__219390461 = Amount__460182544;
+type Amount__331108724 = Amount__460182544;
+type Amount__460182544 = Nat;
+type Amount__719357502 = Amount__460182544;
+type Amount__802060868 = Amount__460182544;
+type CompanyInfo__398140505 =
+  {
+    activite : Text;
+    adresse : Text;
+    email : Text;
+    exerciceActuel : Nat;
+    nif : Text;
+    nis : Text;
+    nom : Text;
+    rc : Text;
+    telephone : Text
+  };
+type CompteTresorerie__641450016 =
+  {
+    actif : Bool;
+    banque : ?Text;
+    compteComptable : Text;
+    id : Text;
+    libelle : Text;
+    numeroCompte : ?Text;
+    solde : Amount__219390461;
+    type_ : TresoType__844233479
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type EcritureComptable__1043365593 =
+  {
+    compte : Text;
+    credit : Amount__331108724;
+    debit : Amount__331108724;
+    libelle : Text
+  };
+type FactureStatut__791600898 = {#Annulee; #Brouillon; #Payee; #Validee};
+type FactureType__254696888 = {#Achat; #Vente};
+type Facture__864224857 =
+  {
+    dateEcheance : ?Timestamp__999816509;
+    date_ : Timestamp__999816509;
+    exercice : Nat;
+    id : Text;
+    lignes : [LigneFacture__634851879];
+    notes : Text;
+    numero : Text;
+    statut : FactureStatut__791600898;
+    tiersId : Text;
+    totalHT : Amount__719357502;
+    totalTTC : Amount__719357502;
+    totalTVA : Amount__719357502;
+    type_ : FactureType__254696888
+  };
+type FiscalYear__571269455 =
+  {
+    annee : Nat;
+    cloture : Bool;
+    debut : Timestamp__256802006;
+    fin : Timestamp__256802006
+  };
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type JournalEntry__734203721 =
+  {
+    date_ : Timestamp__256802006;
+    ecritures : [EcritureComptable__1043365593];
+    exercice : Nat;
+    id : Text;
+    journalCode : Text;
+    libelle : Text;
+    numero : Nat;
+    valide : Bool
+  };
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type LigneFacture__634851879 =
+  {
+    designation : Text;
+    montantHT : Amount__719357502;
+    montantTTC : Amount__719357502;
+    montantTVA : Amount__719357502;
+    prixUnitaire : Amount__719357502;
+    produitId : ?Text;
+    quantite : Float;
+    tauxTVA : Float
+  };
+type Map__158565046<K, V> = Map__297112838<K, V>;
+type Map__297112838<K, V> =
+  {var root : Node__46230540<K, V>; var size : Nat__490723111};
+type Map__605269027<K, V> = Map__158565046<K, V>;
+type MouvementStock__1022995786 =
+  {
+    date_ : Timestamp__288252184;
+    exercice : Nat;
+    id : Text;
+    notes : Text;
+    prixUnitaire : Amount__802060868;
+    produitId : Text;
+    quantite : Float;
+    reference : Text;
+    type_ : MouvementType__712939014
+  };
+type MouvementTresorerie__497551111 =
+  {
+    compteId : Text;
+    date_ : Timestamp__807882141;
+    exercice : Nat;
+    id : Text;
+    libelle : Text;
+    montant : Amount__219390461;
+    reference : Text;
+    type_ : MvtType__328810629
+  };
+type MouvementType__712939014 = {#Ajustement; #Entree; #Sortie};
+type MvtType__328810629 = {#Decaissement; #Encaissement};
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type Produit__394474917 =
+  {
+    actif : Bool;
+    code : Text;
+    compteStock : Text;
+    designation : Text;
+    id : Text;
+    prixAchat : Amount__802060868;
+    prixVente : Amount__802060868;
+    stockActuel : Float;
+    stockMinimum : Float;
+    unite : Text
+  };
+type Role__300349085 = {#Admin; #Comptable; #Gestionnaire; #Lecteur};
+type Tiers__662678727 =
+  {
+    adresse : Text;
+    compteComptable : Text;
+    email : Text;
+    estClient : Bool;
+    estFournisseur : Bool;
+    id : Text;
+    nif : Text;
+    nis : Text;
+    nom : Text;
+    rc : Text;
+    telephone : Text
+  };
+type Timestamp__256802006 = Timestamp__301639476;
+type Timestamp__288252184 = Timestamp__301639476;
+type Timestamp__301639476 = Int;
+type Timestamp__807882141 = Timestamp__301639476;
+type Timestamp__999816509 = Timestamp__301639476;
+type TresoType__844233479 = {#Banque; #Caisse};
+type UserId__158757552 = Principal;
+type UserProfile__129828592 =
+  {
+    actif : Bool;
+    email : Text;
+    nom : Text;
+    role : Role__300349085;
+    userId : UserId__158757552
+  };
+type UserRole__1054455867 = {#admin; #guest; #user};
+actor {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__605269027<Principal, UserRole__1054455867>
+    };
+  stable companyInfo :
+    {
+      var root : Node__46230540<Text, CompanyInfo__398140505>;
+      var size : Nat__490723111
+    };
+  stable comptesComptables :
+    {
+      var root : Node__46230540<Text, Account__252117990>;
+      var size : Nat__490723111
+    };
+  stable comptesTreso :
+    {
+      var root : Node__46230540<Text, CompteTresorerie__641450016>;
+      var size : Nat__490723111
+    };
+  stable exercices :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?FiscalYear__571269455]];
+      var elementIndex : Nat__490723111
+    };
+  stable factures :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Facture__864224857]];
+      var elementIndex : Nat__490723111
+    };
+  stable journal :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?JournalEntry__734203721]];
+      var elementIndex : Nat__490723111
+    };
+  stable mouvementsStock :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?MouvementStock__1022995786]];
+      var elementIndex : Nat__490723111
+    };
+  stable mouvementsTreso :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?MouvementTresorerie__497551111]];
+      var elementIndex : Nat__490723111
+    };
+  stable nextJournalId : {var value : Nat};
+  stable produits :
+    {
+      var root : Node__46230540<Text, Produit__394474917>;
+      var size : Nat__490723111
+    };
+  stable tiers :
+    {
+      var root : Node__46230540<Text, Tiers__662678727>;
+      var size : Nat__490723111
+    };
+  stable userProfiles :
+    {
+      var root : Node__46230540<Principal, UserProfile__129828592>;
+      var size : Nat__490723111
+    }
+};
